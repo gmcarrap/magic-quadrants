@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Enter the value of N corresponding to the maximum number of the prime number search range</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0;
+            background-color: #f0f0f0; 
+        }
+        .form-container {
+            width: 300px; 
+            padding: 20px; 
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+            background-color: #fff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        form {
+            text-align: center; 
+        }
+        label {
+            font-size: 18px; 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 10px; 
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            margin-bottom: 10px; 
+            font-size: 16px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+        }
+        input[type="submit"] {
+            background-color: #4CAF50; 
+            color: white; 
+            cursor: pointer; 
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Enter the value of N corresponding to the maximum number of the prime number search range</h2>
+        <form action="/magic-quadrants" method="POST">
+            <label for="N">Max Number:</label><br>
+            <input type="text" id="N" name="N" required><br><br>
+            <input type="submit" value="Get Magic Quadrants">
+        </form>
+    </div>
+</body>
+</html>

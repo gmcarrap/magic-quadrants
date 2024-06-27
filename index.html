@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Magic Quadrants</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f0f0f0; 
+        }
+        .matrix-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+            gap: 40px; 
+        }
+        .matrix-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #ffffff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            width: 300px;
+            white-space: pre-wrap;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px; 
+        }
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 50px);
+            grid-gap: 5px;
+            margin-bottom: 10px; 
+        }
+        .matrix-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            background-color: #f9f9f9; 
+            border: 1px solid #ccc;
+        }
+        .sum-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #e0e0e0; 
+            border: 1px solid #ccc;
+        }
+        .json-container {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            width: 300px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+        .matrix-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-color: #4CAF50; 
+            color: #ffffff; 
+            padding: 8px 16px; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Magic Quadrants</h1>
+    
+    <div class="matrix-container">
+        <div class="matrix-wrapper" id="matrices">
+
+        </div>
+        <div class="json-container" id="jsonDataContainer">
+            <h2>JSON Data</h2>
+            <pre id="jsonData"></pre>
+        </div>
+    </div>
+
+    <script>
+        function fetchDataAndDrawMatrices() {
+            fetch('/magic-quadrants-json', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ N: {{ N }} })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('jsonData').innerText = JSON.stringify(data, null, 2);
+
+                const matricesContainer = document.getElementById('matrices');
+                matricesContainer.innerHTML = '';
+
+                data.forEach((item, index) => {
+                    const matrixWrapper = document.createElement('div');
+                    matrixWrapper.classList.add('matrix-wrapper');
+
+                    
+                    const matrixTitle = document.createElement('div');
+                    matrixTitle.classList.add('matrix-title');
+                    matrixTitle.innerText = `Magic Quadrants ${index + 1}`;
+                    matrixWrapper.appendChild(matrixTitle);
+
+                    const matrixElement = document.createElement('div');
+                    matrixElement.classList.add('matrix');
+
+                    const rowSums = [];
+                    const colSums = new Array(3).fill(0);
+                    let diagonalSum = 0;
+
+                    item.elements.forEach((value, i) => {
+                        const rowIndex = Math.floor(i / 3);
+                        const colIndex = i % 3;
+
+                        rowSums[rowIndex] = (rowSums[rowIndex] || 0) + value;
+                        colSums[colIndex] += value;
+                        if (rowIndex === colIndex) {
+                            diagonalSum += value;
+                        }
+
+                        const cellElement = document.createElement('div');
+                        cellElement.classList.add('matrix-cell');
+                        cellElement.innerText = value;
+                        matrixElement.appendChild(cellElement);
+
+                        if (colIndex === 2) {
+                            const matrixRowElement = document.createElement('div');
+                            matrixRowElement.classList.add('matrix');
+                            matrixRowElement.appendChild(cellElement);
+
+                            const rowSumElement = document.createElement('div');
+                            rowSumElement.classList.add('sum-cell');
+                            rowSumElement.innerText = rowSums[rowIndex];
+                            matrixRowElement.appendChild(rowSumElement);
+
+                            matrixElement.appendChild(matrixRowElement);
+                        }
+                    });
+
+                    matricesContainer.appendChild(matrixWrapper);
+                    matrixWrapper.appendChild(matrixElement);
+
+                    const sumRow = document.createElement('div');
+                    sumRow.classList.add('matrix');
+                    colSums.forEach((sum, colIndex) => {
+                        const sumElement = document.createElement('div');
+                        sumElement.classList.add('sum-cell');
+                        sumElement.innerText = sum;
+                        sumRow.appendChild(sumElement);
+                    });
+
+                    const diagonalSumElement = document.createElement('div');
+                    diagonalSumElement.classList.add('sum-cell', 'diagonal-sum');
+                    diagonalSumElement.innerText = diagonalSum;
+
+                    //sumRow.appendChild(diagonalSumElement);
+
+                    matrixWrapper.appendChild(sumRow);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        fetchDataAndDrawMatrices();
+    </script>
+</body>
+</html>
