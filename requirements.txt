@@ -1,7 +1,10 @@
-mkdocks
+flask
+flask-sqlalchemy
+flask-wtf
+mkdocs
 mkdocs-material 
 mkdocstrings
 more-itertools
-numpy=1.23
+numpy==1.23
 pyopencl
 tensorflow
