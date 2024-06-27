@@ -12,9 +12,6 @@ Finally, the matrices are formed following Green's and Tao's Theorem from the ca
 - [Instalación](#instalación)
 - [Documentation](#documentation)
 - [API Usage](#API_Usage)
-- [Contribución](#contribución)
-- [Licencia](#licencia)
-- [Contacto](#contacto)
 
 ## Description
 
