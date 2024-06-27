@@ -44,6 +44,8 @@ Step-by-step instructions on how to install the project. Includes any necessary 
 - Install the requirements
   `pip install -r requirements.txt`
 
+- Install `conda install flask`and `conda install numpy`
+
 ## Documentation
 
 - Execute the documentation
