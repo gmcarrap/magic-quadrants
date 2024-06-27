@@ -1,0 +1,7 @@
+mkdocks
+mkdocs-material 
+mkdocstrings
+more-itertools
+numpy=1.23
+pyopencl
+tensorflow
