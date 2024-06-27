@@ -9,7 +9,7 @@ Finally, the matrices are formed following Green's and Tao's Theorem from the ca
 ## Index
 
 - [Description](#description)
-- [Instalación](#instalación)
+- [Installation](#installation)
 - [Documentation](#documentation)
 - [API Usage](#API_Usage)
 
@@ -27,7 +27,7 @@ If we notice, the values of such a magic square contain an arithmetic succession
 
 Because, in order to calculate magic squares formed by prime numbers, we are going to look for those sets of prime numbers of dimension N that fulfill an arithmetic sequence. This is known as the Green and Tao theorem.
 
-## Instalación
+## Installation
 
 Step-by-step instructions on how to install the project. Includes any necessary prerequisites.
 
